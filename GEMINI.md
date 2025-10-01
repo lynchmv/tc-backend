@@ -100,3 +100,41 @@ The project is set up with a functional FastAPI application, PostgreSQL database
 *   Consider implementing unit and integration tests.
 
 ---
+
+  ---
+
+  End of Shift Report
+
+  Project: tc-frontend & tc-backend
+
+  Objective: Refine and debug the "Team Import" feature to ensure a smooth and reliable user experience.
+
+  Summary of Work:
+
+   1. Initial Refactoring:
+       * The "Team Import" wizard was initially refactored to use static lists for the first five steps (year, league type, section, district, and area) to
+         improve performance and reduce reliance on scraping.
+       * The list of years was updated to be dynamically generated, showing the current year and the four previous years.
+       * The static lists for league types and sections were updated with comprehensive data provided by the user.
+
+   2. Reverting to a Hybrid Approach:
+       * Based on user feedback, the import process was reverted to a hybrid approach. The year, league type, and section selections are now static, while the
+         subsequent steps (district, area, gender, flight, and team) are populated by scraping TennisRecord.com.
+
+   3. Debugging and Bug Fixes:
+       * URL Encoding: Resolved a critical issue where special characters in the URLs were not being correctly handled, leading to malformed URLs and failed
+         scraping attempts. This was fixed by changing the HTML parser in the backend to lxml, which is more robust.
+       * Dependency Management: Added lxml to the backend's dependencies and updated the poetry.lock file to ensure the new dependency is correctly installed in
+         the Docker container.
+       * Scraper Logic: Corrected the logic for selecting the correct table on the flights and teams pages, which was causing the scraper to return empty lists.
+       * Frontend Data Handling: Fixed a bug in the frontend where it was trying to access a non-existent property on the flight object, causing a TypeError.
+       * Backend Errors: Fixed a NameError and multiple IndentationErrors in the backend scraper code.
+       * Circular Dependency: Resolved a circular dependency issue between the Player and Team models in the backend, which was causing empty player objects to be
+         returned. This was fixed by creating a new PlayerResponse schema for the API response.
+
+  Outcome:
+
+  The "Team Import" feature is now fully functional and robust. The user can successfully navigate through the entire import process, from selecting a league to
+  importing the players of a team into the database.
+
+  ---
